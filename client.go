@@ -89,6 +89,9 @@ var notFindMap = map[string]bool{}
 
 func InitRandomStrMap() {
 	for _, i := range baseStr {
+		if i == "0" || i == "1" || i == "2" || i == "3" || i == "4" || i == "5" || i == "6" || i == "7" || i == "8" || i == "9" {
+			continue
+		}
 		for _, j := range baseStr {
 			for _, k := range baseStr {
 				randomStr := fmt.Sprintf("%s%s%s", i, j, k)
@@ -112,13 +115,13 @@ func CreateReq() {
 			continue
 		}
 
-		file, err := os.OpenFile("sub_data.txt", os.O_APPEND|os.O_WRONLY, os.ModePerm)
+		file, err := os.OpenFile("sub_data.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, os.ModePerm)
 		if err != nil {
-			return
+			continue
 		}
 		_, err = file.WriteString(fmt.Sprintf("%s\n", key))
 		if err != nil {
-			return
+			continue
 		}
 		notFindMap[key] = find
 	}
